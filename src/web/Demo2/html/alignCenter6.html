@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>floatDemo</title>
+</head>
+<body>
+<style>
+    .wrapper-double-float {
+        overflow: auto;
+        box-sizing: content-box;
+        border: 1px solid black;
+    }
+
+    .wrapper-double-float .left,
+    .wrapper-double-float .right {
+        float: left;
+        text-align: center;
+        box-sizing: border-box;
+    }
+
+    .wrapper-double-float .right {
+        width: calc(100% - 140px);
+    }
+
+    .wrapper-absolute {
+        border: 1px solid black;
+    }
+
+    .wrapper-absolute .left {
+        position: absolute;
+        width: 150px;
+        background-color: #009fd9;
+    }
+
+    .wrapper-absolute .right {
+        margin-left: 150px;
+        width: calc(100% - 150px);
+        background-color: #82878f;
+    }
+
+    .wrapper-grid {
+        display: grid;
+        grid-template-columns: 120px 1fr;
+        align-items: start;
+    }
+
+    .wrapper-grid .left,
+    .wrapper-grid .right {
+        box-sizing: border-box;
+    }
+
+    .wrapper-grid .left {
+        grid-column: 1;
+    }
+
+    .wrapper-grid .right {
+        grid-column: 2;
+    }
+</style>
+
+<div class="wrapper-double-float">
+    <div class="left">left</div>
+    <div class="right">content</div>
+</div>
+
+<div class="wrapper-absolute">
+    <div class="left">left</div>
+    <div class="right">content</div>
+</div>
+
+<div class="wrapper-grid">
+    <div class="left">left</div>
+    <div class="right">content</div>
+</div>
+
+<div style="height:300px;width: 300px;text-align: center">
+    kkkkk
+</div>
+<div style="height:300px;width: 300px;border: 1px solid black">
+    <div style="margin: 0 auto;width: 100px">kkkkk</div>
+</div>
+<script>
+    function aaa() {
+        console.log(this, this.target)
+    }
+</script>
+</body>
+</html>

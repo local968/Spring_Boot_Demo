@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sort</title>
+</head>
+<body>
+<script>
+    window.onload = function () {
+        console.log(insertSort([3, 6, 12, 1, 8, 3, 2, 0, 9, 19]))
+    }
+
+
+    function insertSort(arr) {
+        var len = arr.length;
+        for (var i = 1; i < len; i++) {
+            var preIndex = i - 1, current = arr[i];
+            while (preIndex > 0 && arr[preIndex] > current) {
+                arr[preIndex + 1] = arr[preIndex];
+                preIndex--;
+            }
+            arr[preIndex + 1] = current;
+        }
+        return arr;
+    }
+
+    function swap(arr, j, k) {
+        var temp = arr[j];
+        arr[j] = arr[k];
+        arr[k] = temp;
+    }
+
+    function bubbleSort(arr) {
+        var len = arr.length;
+        for (var i = 0; i < len - 1; i++) {
+            for (var j = i + 1; j < len; j++) {
+                if (arr[i] > arr[j]) {
+                    swap(arr, i, j);
+                }
+            }
+        }
+        return arr;
+    }
+
+    function markSort(arr) {
+        var len = arr.length;
+        for (var i = 0; i < len - 1; i++) {
+            var min = i;
+            for (var j = i + 1; j < len; j++) {
+                if (arr[min] > arr[j]) {
+                    min = j;
+                }
+            }
+            swap(arr, min, i);
+        }
+        return arr;
+    }
+
+</script>
+</body>
+</html>

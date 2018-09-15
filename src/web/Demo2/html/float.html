@@ -1,0 +1,250 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>2.3-float属性</title>
+    <style type="text/css">
+        #a {
+            background-color: Red;
+            height: 50px;
+            width: 100px;
+        }
+
+        #b {
+            background-color: Yellow;
+            height: 50px;
+            width: 200px;
+        }
+
+        #c {
+            background-color: Blue;
+            height: 50px;
+            width: 300px;
+        }
+
+        #d {
+            background-color: Gray;
+            height: 50px;
+            width: 400px;
+        }
+
+        html, body, div {
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            position: relative;
+            width: 2000px;
+            height: 2000px;
+        }
+
+        .balloon {
+            position: relative;
+            float: left;
+            width: 80px;
+            height: 80px;
+            margin: 0 20px;
+            top: 0;
+            text-align: center;
+            font-size: 12px;
+            line-height: 80px;
+            border-radius: 80px;
+            color: rgb(247, 133, 2);
+            background-color: rgba(218, 165, 165, 0.5);
+        }
+
+        .default {
+            -webkit-animation-name: default-animation;
+            -moz-animation-name: default-animation;
+            -o-animation-name: default-animation;
+            animation-name: default-animation;
+            animation-duration: 8s;
+            animation-timing-function: ease;
+            animation-delay: 3s;
+            -webkit-animation-iteration-count: infinite;
+            -moz-animation-iteration-count: infinite;
+            -o-animation-iteration-count: infinite;
+            animation-iteration-count: infinite;
+            /*animation-direction: normal;*/
+            animation-direction: alternate;
+        }
+
+        @keyframes default-animation {
+            /*10% {background-color: black}*/
+            /*50% {background-color: red}*/
+            /*70% {background-color: green}*/
+            /*100% {background-color: yellow}*/
+
+            from {
+                top: 0;
+                transform: scale(1);
+                opacity: 1;
+
+            }
+            to {
+                top: 300px;
+                transform: scale(3);
+                opacity: 0.11;
+            }
+        }
+
+        .border-up {
+            width: 0;
+            height: 0;
+            float: left;
+            border-width: 30px 30px 30px;
+            border-style: solid;
+            border-color: transparent transparent yellow; /*透明 透明  灰*/
+            /*-webkit-transform: rotate(90deg);*/
+            /*-moz-transform: rotate(90deg);*/
+            /*-ms-transform: rotate(90deg);*/
+            /*-o-transform: rotate(90deg);*/
+            /*transform: rotate(90deg);*/
+        }
+
+        .border-up1 {
+            width: 0;
+            height: 0;
+            float: left;
+            border-width: 30px 30px 30px;
+            border-style: solid;
+            border-color: transparent transparent green;
+        }
+
+        .canvas {
+            width: 100px;
+            height: 100px;
+            float: left;
+            border: 1px solid #c3c3c3;
+        }
+
+        .aaa {
+            float: left;
+            height: 100px;
+            width: 100px;
+            background-color: #009fd9;
+            position: relative
+        }
+
+        .bbb {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            border: 1px solid #cccccc;
+            height: 50px;
+            width: 50px;
+            transform: translate(-50%, -50%);
+        }
+
+        .aaa1 {
+            float: left;
+            font-size: 0;
+            background-color: green;
+        }
+
+        .box3, .box4 {
+            position: relative;
+            float: left;
+            width: 100px;
+            height: 100px;
+            border: 1px solid #cccccc;
+            text-align: center;
+        }
+
+        .box3 span {
+            vertical-align: middle;
+            display: inline-block;
+            font-size: 16px;
+        }
+
+        .box3:after {
+            content: '';
+            width: 0;
+            height: 100%;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .box4 span {
+            width: 50%;
+            height: 50%;
+            background: #000;
+            overflow: auto;
+            margin: auto;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+        }
+    </style>
+</head>
+<body>
+
+
+<div class="container">
+    <div class="balloon default ">default</div>
+    <div class="balloon linear ">linear</div>
+    <div class="balloon ease ">ease</div>
+    <div class="balloon ease-in ">ease-in</div>
+    <div class="balloon ease-out ">ease-out</div>
+    <div class="balloon ease-in-out ">ease-in-out</div>
+    <div class="balloon cubic-bezie ">cubic-bezie</div>
+    <div class="border-up"></div>
+    <div class="border-up1"></div>
+    <canvas id="triangle" class="canvas">Triangle</canvas>
+    <div class="aaa">
+        <div class="bbb">1111</div>
+    </div>
+
+    <div class="aaa1">
+        <div style="width: 100px;padding-top:100%;border: 1px solid red"></div>
+    </div>
+
+    <div class="box3">
+        <span>垂直居中</span>
+    </div>
+
+    <div class="box4">
+        <span>垂直居中</span>
+    </div>
+</div>
+
+<script>
+    window.onload = function () {
+        aaa();
+
+        var canvas = document.getElementById("triangle");
+        var content = canvas.getContext('2d');
+//        content.beginPath();
+//        content.moveTo(10, 10);
+//        content.lineTo(80, 10);
+//        content.lineTo(10, 80);
+//        content.closePath();
+//        content.fillStyle = 'rgb(78, 193, 243)';
+//        content.fill()
+
+        var img = new Image();
+        img.src = "http://www.w3school.com.cn/i/ct_html5_canvas_image.gif";
+        content.drawImage(img, 0, 0)
+    }
+
+    function aaa() {
+        console.log(a);
+
+        function a() {
+
+        }
+
+        var a = 1;
+
+        a = 3;
+
+        console.log(a)
+    }
+
+</script>
+</body>
+</html>

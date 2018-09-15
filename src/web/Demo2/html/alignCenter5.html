@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>floatDemo</title>
+</head>
+<body>
+<style>
+    .pagination ul {
+        width: -moz-fit-content;
+        width: -webkit-fit-content;
+        width: fit-content;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .pagination li {
+        line-height: 25px;
+        margin: 0 5px;
+        float: left;
+    }
+
+    .pagination a {
+        display: block;
+        color: #f2f2f2;
+        text-shadow: 1px 0 0 #101011;
+        padding: 0 10px;
+        border-radius: 2px;
+        box-shadow: 0 1px 0 #5a5b5c inset, 0 1px 0 #080808;
+        background: linear-gradient(top, #434345, #2f3032);
+    }
+
+    .pagination a:hover {
+        text-decoration: none;
+        box-shadow: 0 1px 0 #f9bd71 inset, 0 1px 0 #0a0a0a;
+        background: linear-gradient(top, #f48b03, #c87100);
+    }
+
+    .container {
+        border: 1px solid black;
+        padding: 0 200px 0 300px;
+        position: relative;
+    }
+
+    .left {
+        float: left;
+        width: 300px;
+        height: 89px;
+        margin-left: -300px;
+        background-color: red;
+    }
+
+    .center {
+        float: left;
+        width: 100%;
+        height: 66px;
+        background-color: yellow;
+    }
+
+    .right {
+        float: right;
+        width: 200px;
+        height: 89px;
+        margin-right: -200px;
+        background-color: green;
+    }
+
+    .container::after {
+        display: block;
+        content: '';
+        clear: both;
+        height: 0;
+    }
+
+    .container1 {
+        margin-top: 20px;
+        border: 1px solid black;
+    }
+
+    .contentContainer {
+        float: left;
+        padding: 0 200px 0 300px;
+        width: 100%;
+    }
+
+    .center1 {
+        width: 100%;
+        height: 89px;
+        background-color: yellow;
+    }
+
+    .left1 {
+        float: left;
+        height: 108px;
+        left: 300px;
+        position: relative;
+        background-color: red;
+    }
+
+    .right1 {
+        float: left;
+        height: 68px;
+        position: relative;
+        left: -200px;
+        background-color: green;
+    }
+
+    .container1::after {
+        display: block;
+        content: '';
+        clear: both;
+        height: 0;
+    }
+
+</style>
+<div class="pagination">
+    <ul onclick="aaa()">
+        <li><a href="#">pre</a></li>
+        <li id="1"><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">next</a></li>
+    </ul>
+</div>
+
+<p style="margin-left: 120px">
+    第2个浮动是靠在1左边，因为它是后放置的元素。
+    而第3个元素是后出现的浮动元素，所以不能超过第二个浮动元素的底端~
+    也就是说 所有浮动内容都是可见的！ 不必担心一个浮动元素与另一个浮动元素重叠。
+<p style="float: left;margin-left: 12px">aaaaaaaaaaaaaaaaaaaaaaaaa</p>
+左浮动元素的右外边界 不会在 其右边右浮动元素的 左外边界的右边。
+同理，一个右浮动元素的左外边界不会在其左边任何左浮动元素的右外边界的左边。
+如图：
+</p>
+
+<div class="container">
+    <div class="left"></div>
+    <div class="center"></div>
+    <div class="right"></div>
+</div>
+
+<div class="container1">
+    <div class="left1"></div>
+    <div class="contentContainer">
+        <div class="center1"></div>
+    </div>
+    <div class="right1"></div>
+</div>
+<script>
+    function aaa() {
+        console.log(this, this.target)
+    }
+</script>
+</body>
+</html>

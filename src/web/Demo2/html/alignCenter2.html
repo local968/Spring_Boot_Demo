@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>floatDemo</title>
+</head>
+<body>
+<style>
+    html * {
+        padding: 0;
+        margin: 0;
+    }
+
+    .pagination {
+        text-align: center;
+        font-size: 0;
+        letter-spacing: -4px;
+        word-spacing: -4px;
+    }
+
+    .pagination li {
+        line-height: 25px;
+        margin: 0 5px;
+        display: inline-block;
+        *display: inline;
+        zoom: 1;
+        letter-spacing: normal;
+        word-spacing: normal;
+        font-size: 12px;
+    }
+
+    .pagination a {
+        display: block;
+        color: #f2f2f2;
+        text-shadow: 1px 0 0 #101011;
+        padding: 0 10px;
+        border-radius: 2px;
+        box-shadow: 0 1px 0 #5a5b5c inset, 0 1px 0 #080808;
+        background: linear-gradient(top, #434345, #2f3032);
+    }
+
+    .pagination a:hover {
+        text-decoration: none;
+        box-shadow: 0 1px 0 #f9bd71 inset, 0 1px 0 #0a0a0a;
+        background: linear-gradient(top, #f48b03, #c87100);
+    }
+
+    .aaa::after {
+        display: block;
+        content: '';
+        font-size: 0;
+        height: 0;
+        clear: both;
+        zoom: 1;
+    }
+
+    .box1 {
+        border: 10px red solid;
+        /*
+         * 根据W3C的标准，在页面中元素都一个隐含的属性叫做Block Formatting Context
+         *     简称BFC，该属性可以设置打开或者关闭，默认是关闭的。
+         * 当开启元素的BFC以后，元素将会具有如下的特性：
+         *     1.父元素的垂直外边距不会和子元素重叠
+         *     2.开启BFC的元素不会被浮动元素所覆盖
+         *     3.开启BFC的元素可以包含浮动的子元素
+         *
+         * 如何开启元素的BFC
+         *     1.设置元素浮动
+         *         - 使用这种方式开启，虽然可以撑开父元素，但是会导致父元素的宽度丢失
+         *             而且使用这种方式也会导致下边的元素上移，不能解决问题
+         *     2.设置元素绝对定位
+         *     3.设置元素为inline-block
+         *         - 可以解决问题，但是会导致宽度丢失，不推荐使用这种方式
+         *     4.将元素的overflow设置为一个非visible的值
+         *
+         * 推荐方式：将overflow设置为hidden是副作用最小的开启BFC的方式。
+         */
+
+        /*overflow: hidden;*/
+
+        /*
+         *但是在IE6及以下的浏览器中并不支持BFC，所以使用这种方式不能兼容IE6。
+         * 在IE6中虽然没有BFC，但是具有另一个隐含的属性叫做hasLayout，
+         * 该属性的作用和BFC类似，所在IE6浏览器可以通过开hasLayout来解决该问题
+         * 开启方式很多，我们直接使用一种副作用最小的：
+         *     直接将元素的zoom设置为1即可
+         *
+         */
+
+        /*
+         * zoom表示放大的意思，后边跟着一个数值，写几就将元素放大几倍
+         * zoom:1表示不放大元素，但是通过该样式可以开启hasLayout
+         * zoom这个样式，只在IE中支持，其他浏览器都不支持
+         */
+        zoom: 1;
+        overflow: hidden;
+
+    }
+
+    .box2 {
+        width: 100px;
+        height: 100px;
+        background-color: blue;
+        float: left;
+
+    }
+
+    .box3 {
+        height: 100px;
+        background-color: yellow;
+    }
+
+</style>
+<!--<div class="pagination">-->
+<!--<ul>-->
+<!--<li><a href="#">pre</a></li>-->
+<!--<li><a href="#">1</a></li>-->
+<!--<li><a href="#">2</a></li>-->
+<!--<li><a href="#">3</a></li>-->
+<!--<li><a href="#">next</a></li>-->
+<!--</ul>-->
+<!--</div>-->
+
+
+<div style="padding: 0 300px;" class="aaa">
+    <div style="float:left;width: 100%;background-color: green;height: 88px;">center</div>
+    <div style="float:left;background-color: red;width: 300px;margin-left: -100%;position: relative;height: 98px;left: -300px">
+        left
+    </div>
+    <div style="background-color: yellow;width: 300px;float: left;margin-left: -300px;position: relative;height: 78px;right: -300px">
+        bottom
+    </div>
+</div>
+
+
+<!--<div style="border: 1px solid black;" >-->
+<!--<div style="position: absolute;left:300px;right:300px;background-color: green;height: 88px;">center</div>-->
+<!--<div style="position: absolute;width: 300px;background-color: red;height:98px;left: 0">left</div>-->
+<!--<div style="background-color: yellow;width: 300px;position: absolute;height: 78px;right: 0">bottom</div>-->
+<!--</div>-->
+
+
+<!--<div style="border: 1px solid black;">-->
+<!--<div style="float: left;left:300px;right:300px;background-color: green;height: 88px;">center</div>-->
+<!--<div style="clear: both"></div>-->
+<!--</div>-->
+
+<!--<div style="border: 1px solid black;" class="aaa">-->
+<!--<div style="float: left;left:300px;right:300px;background-color: green;height: 88px;">center</div>-->
+<!--</div>-->
+
+<!--<div class="box1">-->
+<!--<div class="box2"></div>-->
+<!--</div>-->
+
+<!--<div class="box3"></div>-->
+
+
+<!--<div style="border: 1px solid black" class="aaa">-->
+<!--<div style="float: left;width: 100%;">-->
+<!--<div style="height:88px;margin: 0 300px;background-color: green">center</div>-->
+<!--</div>-->
+<!--<div style="height:98px;float:left;background-color: red;width: 300px;margin-left: -100%;">left</div>-->
+<!--<div style="height:78px;background-color: yellow;width: 300px;float: left;margin-left: -300px;">bottom</div>-->
+<!--</div>-->
+
+<script>
+
+    window.onload = function () {
+
+        function _(array) {
+            this._value = Array.prototype.slice.call(array);
+        }
+
+        var aaa = {};
+        aaa.map = function (array, fn) {
+            return Array.prototype.map.call(array, function (v, k, list) {
+                return fn.apply(v, [v, k, list]);
+            })
+        }
+
+        aaa.forEach = function (array, fn) {
+            Array.prototype.forEach.call(array, function (v, k, list) {
+                fn.apply(v, [v, k, list]);
+            })
+        }
+
+        _.chain = function (array) {
+            return new _(array);
+        }
+
+        _.values = function () {
+            return this._value;
+        }
+
+        for (var i in aaa) {
+            _.prototype[i] = (function () {
+                return function () {
+                    var args = Array.prototype.slice.call(arguments);
+                    args.unshift(this._value);
+                    if (i === 'map') {
+                        this._value = aaa[i].apply(this, args);
+                    } else {
+                        aaa[i].apply(this, args);
+                    }
+                    return this;
+                }
+            })();
+        }
+
+        _.chain([3, 4, 5]).map(function (a) {
+            return a * a;
+        }).forEach(function (b) {
+            console.log(b)
+        }).values();
+    }
+
+
+</script>
+
+</body>
+</html>

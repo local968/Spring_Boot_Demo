@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>floatDemo</title>
+</head>
+<body>
+<style>
+
+    .pagination {
+        position: relative;
+    }
+
+    .pagination ul {
+        position: absolute;
+        left: 50%;
+    }
+
+    .pagination li {
+        line-height: 25px;
+        margin: 0 5px;
+        float: left;
+        position: relative; /*注意，这里不能是absolute，大家懂的*/
+        right: 50%;
+    }
+
+    .pagination a {
+        display: block;
+        color: #f2f2f2;
+        text-shadow: 1px 0 0 #101011;
+        padding: 0 10px;
+        border-radius: 2px;
+        box-shadow: 0 1px 0 #5a5b5c inset, 0 1px 0 #080808;
+        background: linear-gradient(top, #434345, #2f3032);
+    }
+
+    .pagination a:hover {
+        text-decoration: none;
+        box-shadow: 0 1px 0 #f9bd71 inset, 0 1px 0 #0a0a0a;
+        background: linear-gradient(top, #f48b03, #c87100);
+    }
+
+    div {
+        background-color: red !important;
+    }
+</style>
+<!--<div class="pagination">-->
+<!--<ul>-->
+<!--<li><a href="#">pre</a></li>-->
+<!--<li><a href="#">1</a></li>-->
+<!--<li><a href="#">2</a></li>-->
+<!--<li><a href="#">3</a></li>-->
+<!--<li><a href="#">next</a></li>-->
+<!--</ul>-->
+<!--</div>-->
+
+<!--<div style="width: 1000px;height: 1000px;">-->
+<!--<div style="margin: auto; width: 100px;height: 100px;text-align: center">ssss</div>-->
+<!--</div>-->
+
+<!--<div style="height: 720px;position: relative">-->
+<!--<div style=" height: 100px;position: absolute;left:50%">-->
+<!--<div style="position: relative;right: 50%">ssss</div>-->
+<!--</div>-->
+<!--</div>-->
+
+<!--<div style="height: 720px;position: relative">-->
+<!--<div style=" height: 100px;float: left;left:50%;position: relative">-->
+<!--<div style="float: left;right: 50%;position: relative">ssss</div>-->
+<!--</div>-->
+<!--</div>-->
+
+<!--<div style="height: 360px;display: flex;flex:1;flex-direction: row;justify-content: center;">-->
+<!--<div style="flex-grow: 1;border: 1px solid red">ssss</div>-->
+<!--<div style="flex-grow: 2;border: 1px solid green">lllll</div>-->
+<!--<div style="flex-basis: 20px;border: 1px solid green">lllll</div>-->
+<!--<div style="flex-shrink: 0;border: 1px solid red">ssss</div>-->
+<!--<div style="flex-shrink: 1;border: 1px solid green">lllll</div>-->
+<!--<div>flex:flex-grow flex-shrink flex-basis  默认值 1 1 0</div>-->
+<!--</div>-->
+
+<!--<div style="height: 720px;width: fit-content;margin-left: auto;margin-right: auto;">-->
+<!--<div style="display: inline-block;vertical-align: bottom;">-->
+<!--ssss-->
+<!--</div>-->
+<!--<div style="display: inline-block;height: 200px;"></div>-->
+<!--</div>-->
+
+<!--<div style="height: 720px;width: fit-content;margin-left: auto;margin-right: auto;display: table">-->
+<!--<div style="display: table-cell;vertical-align: middle;">-->
+<!--ssss-->
+<!--</div>-->
+<!--</div>-->
+
+<div style="overflow: hidden">
+    <div id="id" style="margin: 20px 0;float: left">
+        sssslllllllllllll
+    </div>
+</div>
+
+<div style=" margin: 20px 0;background-color: green;">
+    ssss
+</div>
+
+<iframe src="https://www.baidu.com" style="width: 300px;height: 300px" id="iframe" onload="getData()"></iframe>
+<script>
+
+    window.onload = function () {
+        assignHandler();
+//        clear();
+        window.onmessage = function (e) {
+            console.log(e)
+        }
+    }
+
+    function getData() {
+        var iframe = document.getElementById('iframe');
+        iframe.onload = function () {
+            var name = iframe.contentWindow.name;
+            console.log(name);
+        };
+        iframe.src = "http://localhost:63342/aaa/web/Demo2/html/alignCenter3.html";
+    }
+
+    function clear() {
+        var element = document.getElementById('id'),
+            parent = element.parentNode;
+        parent.removeChild(element);
+        console.log(element)
+    }
+
+
+    function assignHandler() {
+        var element = document.getElementById('id');
+        var id = element.id;
+        element.onclick = function () {
+            alert(id);
+        };
+        element = null;
+    }
+
+
+    Promise.all = function (promises) {
+        return new Promise(function (resolve, reject) {
+            var result = [], remains;
+
+            function resolver(index) {
+                remains++;
+                return function (value) {
+                    result[i] = value;
+                    if (--remains) {
+                        resolve(result);
+                    }
+                }
+            }
+
+            for (let i = 0; i < promises.length; i++) {
+                var promise = promises[i];
+                if (promise && typeof promise.then === 'function') {
+                    promise.then(resolver(i), reject);
+                } else {
+                    result[i] = promise;
+                }
+            }
+        });
+    };
+
+
+    Promise.race = function (promises) {
+        return new Promise(function (resolve, reject) {
+            for (var i = 0; i < promises.length; i++) {
+                var promise = promises[i];
+                if (promise && typeof promise === 'function') {
+                    promise.then(resolve, resolve);
+                } else {
+                    resolve(promise);
+                }
+            }
+        })
+    };
+
+    var PENDING = 'pending';
+    var SETTLED = 'settled';
+    var FULFILLED = 'fulfilled';
+    var REJECTED = 'rejected';
+    var NOOP = function () {
+    };
+    var asyncSetTimer = setTimeout;
+    var asyncQueue = [];
+    var asyncTimer;
+    function Promise(resolver) {
+        this._then = [];
+        invokeResolver(resolver, this)
+    }
+
+    function invokeResolver(resolver, promise) {
+        function resolvePromise(value) {
+            resolve(promise, value);
+        }
+
+        function rejectPromise(reason) {
+            reject(promise, reason)
+        }
+
+        try {
+            resolver(resolvePromise, rejectPromise)
+        } catch (e) {
+            rejectPromise(e);
+        }
+    }
+
+    function resolve(promise, value) {
+        if (promise === value || !handleThenable(promise, value)) {
+            fulfill(promise, value);
+        }
+    }
+
+    function fulfill(promise, value) {
+        if (promise.state === PENDING) {
+            promise.state = SETTLED;
+            promise.data = value;
+            asyncCall(publishFulfillment, promise);
+        }
+    }
+
+    function publishFulfillment(promise) {
+        promise.state = FULFILLED;
+        publish(promise);
+    }
+
+    function publish(promise) {
+        promise._then = promise._then.forEach(invokeCallback)
+    }
+
+    function invokeCallback(subscribe) {
+        var owner = subscribe.owner, settle = owner.state,
+            value = subscribe.data, callback = subscribe[settle], promise = subscribe.then;
+
+        if (typeof callback === 'function') {
+            settle = FULFILLED;
+            try {
+                callback(value);
+            } catch (e) {
+                reject(promise, e);
+            }
+        }
+
+        if (!handleThenable(promise, value)) {
+            if (settle === FULFILLED) {
+                resolve(promise, value);
+            }
+            if (settle === REJECTED) {
+                reject(promise, value);
+            }
+        }
+    }
+
+    function handleThenable(promise, value) {
+        var resolved;
+        if (value && (typeof value === 'object' || typeof value === 'function')) {
+            var then = value.then;
+            then.call(value, function (val) {
+                if (!resolved) {
+                    resolved = true;
+                    if (val === value) {
+                        fulfill(promise, val);
+                    } else {
+                        resolve(promise, val);
+                    }
+                }
+            }, function (val) {
+                if (!resolved) {
+                    resolved = true;
+                    reject(promise, val);
+                }
+            });
+            return true;
+        }
+
+        return false;
+    }
+
+    function asyncCall(callback, args) {
+        asyncQueue.push([callback, args]);
+
+        if (!asyncTimer) {
+            asyncTimer = true;
+            asyncSetTimer(asyncFlush, 0);
+        }
+    }
+
+    function asyncFlush() {
+        for (var i = 0; i < asyncQueue.length; i++) {
+            asyncQueue[i][0](asyncQueue[i][1]);
+        }
+
+        asyncQueue = [];
+        asyncTimer = false;
+    }
+
+    Promise.prototype = {
+        constructor: Promise,
+        state: PENDING,
+        _then: [],
+        _data: undefined,
+        then: function (onFulfilled, onRejected) {
+            var subscribe = {
+                owner: this,
+                then: new this.constructor(NOOP),
+                FULFILLED: onFulfilled,
+                REJECTED: onRejected
+            };
+
+            if (this.state === FULFILLED || this.state === REJECTED) {
+                asyncCall(invokeCallback, subscribe);
+            } else {
+                this._then.push(subscribe);
+            }
+            return subscribe.then;
+        }
+    }
+
+</script>
+
+</body>
+</html>

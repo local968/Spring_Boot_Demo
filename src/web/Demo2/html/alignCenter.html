@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>floatDemo</title>
+</head>
+<body>
+<style>
+    .pagination {
+        float: left;
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .pagination ul {
+        clear: left;
+        float: left;
+        position: relative;
+        left: 50%; /*整个分页向右边移动宽度的50%*/
+        text-align: center;
+    }
+
+    .pagination li {
+        line-height: 25px;
+        margin: 0 5px;
+        display: block;
+        float: left;
+        position: relative;
+        right: 50%; /*将每个分页项向左边移动宽度的50%*/
+    }
+
+    .pagination a {
+        display: block;
+        color: #f2f2f2;
+        text-shadow: 1px 0 0 #101011;
+        padding: 0 10px;
+        border-radius: 2px;
+        box-shadow: 0 1px 0 #5a5b5c inset, 0 1px 0 #080808;
+        background: linear-gradient(top, #434345, #2f3032);
+    }
+
+    .pagination a:hover {
+        text-decoration: none;
+        box-shadow: 0 1px 0 #f9bd71 inset, 0 1px 0 #0a0a0a;
+        background: linear-gradient(top, #f48b03, #c87100);
+    }
+</style>
+<div class="pagination ">
+    <ul>
+        <li><a href="#">pre</a></li>
+        <li><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">next</a></li>
+    </ul>
+</div>
+
+<input type="text" data-bind="name"/>
+
+<span type="text" data-bind="name"></span>
+
+<script>
+    var myModel;
+    window.onload = function () {
+        myModel = new Model;
+        myModel.set("name", "isildur");
+    };
+
+    var pubSub = (function () {
+        var _callback = {};
+        var pubSub = {
+            sub: function (name, callback) {
+                if (!_callback.hasOwnProperty(name)) {
+                    _callback[name] = callback;
+                }
+            },
+            pub: function (name, propName, val) {
+                if (!_callback.hasOwnProperty(name)) {
+                    return;
+                } else {
+                    _callback[name](propName, val);
+                }
+            }
+        };
+        return pubSub;
+    })();
+
+    function changeHandler(e) {
+        var target = e.target, val = target.value,
+            propName = target.getAttribute('data-bind');
+        if (propName && propName != '') {
+            pubSub.pub('view.change', propName, val);
+        }
+    }
+
+    document.addEventListener('input', changeHandler);
+
+    function Model() {
+        var model = {
+            props: {},
+            set: function (propName, value) {
+                this.props[propName] = value;
+                pubSub.pub('model.change', propName, value);
+            },
+            get: function (propName) {
+                return this.props[propName];
+            }
+        };
+
+        pubSub.sub('model.change', function (propName, value) {
+            doubleBind(model, propName, value);
+        });
+
+        pubSub.sub('view.change', function (propName, value) {
+            doubleBind(model, propName, value);
+        });
+
+        return model;
+    }
+
+
+    function doubleBind(model, propName, value) {
+        model.props[propName] = value;
+        var elements = document.querySelectorAll('[data-bind]'), tag;
+        for (var i = 0, l = elements.length; i < l; i++) {
+            tag = elements[i].tagName.toLowerCase();
+            if (tag === 'input' || tag === 'textarea' || tag === 'select') {
+                elements[i].value = value;
+            } else {
+                elements[i].innerHTML = value;
+            }
+        }
+
+    }
+
+</script>
+</body>
+</html>
