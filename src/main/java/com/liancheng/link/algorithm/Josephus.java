@@ -1,4 +1,4 @@
-package com.liancheng.link;
+package com.liancheng.link.algorithm;
 
 import java.util.ArrayList;
 import java.util.ListIterator;

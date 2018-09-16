@@ -1,4 +1,4 @@
-package com.liancheng.link;
+package com.liancheng.link.algorithm;
 
 public class TempTest {
 
